@@ -3,7 +3,7 @@
   "description": "An example Gatsby source plugin",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "./dist/gatsby-node.js",
+  "main": "./src/gatsby-node.js",
   "files": [
     "./dist/*",
     "gatsby-node.js"
