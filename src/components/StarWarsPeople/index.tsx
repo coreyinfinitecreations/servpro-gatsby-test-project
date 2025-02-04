@@ -1,6 +1,18 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
+import Card from "../Card";
 import { useStaticQuery, graphql } from "gatsby";
+import { css } from "@emotion/react";
+
+const flexContainer = css`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const cardStyle = css`
+  flex: 1 1 calc(33.333% - 40px);
+  margin: 20px;
+`;
 
 type StarWarsPerson = {
   name: string;
@@ -30,44 +42,18 @@ const StarWarsPeople = () => {
   );
 
   return (
-    <div
-      css={{
-        maxWidth: "1440px",
-        padding: "40px",
-        margin: "auto",
-        ul: {
-          listStyleType: "initial",
-        },
-        li: {
-          marginBottom: "8px",
-          maxWidth: "1200px",
-        },
-        p: {
-          marginBottom: "12px",
-          maxWidth: "600px",
-        },
-        code: {
-          backgroundColor: "#eee",
-          borderRadius: "4px",
-          padding: "2px",
-        },
-        a: {
-          color: "orange",
-        },
-      }}
-    >
-      <h2>Star Wars Characters</h2>
-      <ul>
-        {data.allStarWarsPerson.nodes.map((person: StarWarsPerson) => (
-          <li key={person.name}>
-            <p>Name: {person.name}</p>
-            <p>Hair Color: {person.hair_color}</p>
-            <p>Eye Color: {person.eye_color}</p>
-            <p>Height: {person.height}</p>
-            <p>Birth Year: {person.birth_year}</p>
-          </li>
-        ))}
-      </ul>
+    <div css={flexContainer}>
+      {data.allStarWarsPerson.nodes.map((person: StarWarsPerson) => (
+        <div css={cardStyle} key={person.name}>
+          <Card
+            name={person.name}
+            hairColor={person.hair_color}
+            eyeColor={person.eye_color}
+            height={person.height}
+            birthYear={person.birth_year}
+          />
+        </div>
+      ))}
     </div>
   );
 };
