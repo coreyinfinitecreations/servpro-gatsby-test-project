@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
 
 const Instructions = () => {
@@ -108,12 +109,14 @@ const Instructions = () => {
         }}
       />
       <p>
-        <code>plugins/gatsby-star-wars-plugin/src/gatsby-node.ts</code> - This is where you should code your
-        Gatsby Plugin. You will need to run <code>yarn run develop</code> to start the Typescript complation.
+        <code>plugins/gatsby-star-wars-plugin/src/gatsby-node.ts</code> - This
+        is where you should code your Gatsby Plugin. You will need to run{" "}
+        <code>yarn run develop</code> to start the Typescript complation.
       </p>
       <p>
         <code>src/pages/index.tsx</code> - This is where you should build your
-        dashboard front-end. Please create additional components and group them inside the components folder as necessary.
+        dashboard front-end. Please create additional components and group them
+        inside the components folder as necessary.
       </p>
       <h2
         css={{
@@ -133,8 +136,8 @@ const Instructions = () => {
       <ul>
         <li>
           <code>https://swapi.py4e.com/api/people/</code> - This will provide
-          you with a list of people. Please limit the amount you source to exactly{" "}
-          <strong>12</strong>.
+          you with a list of people. Please limit the amount you source to
+          exactly <strong>12</strong>.
         </li>
       </ul>
       <h2
@@ -158,8 +161,8 @@ const Instructions = () => {
           share it with you.
         </li>
         <li>
-          Please publicly fork this project on Github, complete it, and then email
-          back a link to your completed work on your fork.{" "}
+          Please publicly fork this project on Github, complete it, and then
+          email back a link to your completed work on your fork.{" "}
           <strong>Make sure the link is public!</strong>
         </li>
         <li>
@@ -185,14 +188,15 @@ const Instructions = () => {
       />
       <img
         css={{
-          borderRadius: '1rem',
-          maxWidth: '1200px',
+          borderRadius: "1rem",
+          maxWidth: "1200px",
           width: "100%",
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-          marginTop: '2rem'
+          marginTop: "2rem",
         }}
-        src={'/example.png'}
-        alt="example" />
+        src={"/example.png"}
+        alt="example"
+      />
     </div>
   );
 };

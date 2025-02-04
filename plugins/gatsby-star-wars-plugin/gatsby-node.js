@@ -1,6 +1,75 @@
-const fs = require("node:fs")
-if (fs.existsSync("./dist/gatsby-node")) {
-    module.exports = require(`./dist/gatsby-node`)
-} else {
-    module.exports = {}
-}
+import fetch from "node-fetch";
+export const sourceNodes = async ({
+  actions,
+  createNodeId,
+  createContentDigest,
+  reporter,
+}) => {
+  const { createNode } = actions;
+  const fetchPeople = async (url) => {
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  };
+  let currentPage = 1;
+  let allPeople = [];
+  try {
+    // Keep fetching until we have at least 12 people
+    while (allPeople.length < 12) {
+      const url = `https://swapi.py4e.com/api/people/?page=${currentPage}`;
+      const result = await fetchPeople(url);
+      allPeople.push(...result.results);
+      // Move to the next page if there are more results
+      if (result.next) {
+        currentPage++;
+      } else {
+        break; // Stop if there's no next page
+      }
+    }
+    // Limit to 12 results (in case we've fetched more than 12)
+    const limitedPeople = allPeople.slice(0, 12);
+    // Loop through the limited data and create Gatsby nodes
+    limitedPeople.forEach((person) => {
+      const nodeContent = JSON.stringify(person);
+      const nodeMeta = {
+        id: createNodeId(`star-wars-person-${person.name}`),
+        parent: null,
+        children: [],
+        internal: {
+          type: "StarWarsPerson",
+          mediaType: "application/json",
+          content: nodeContent,
+          contentDigest: createContentDigest(person),
+        },
+      };
+      const node = Object.assign({}, person, nodeMeta);
+      createNode(node);
+    });
+    reporter.info(`Successfully fetched and processed data from SWAPI`);
+  } catch (error) {
+    reporter.error(`Error fetching data from SWAPI`, error);
+  }
+};
+export const createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type StarWarsPerson implements Node {
+      name: String
+      height: String
+      mass: String
+      hair_color: String
+      skin_color: String
+      eye_color: String
+      birth_year: String
+      gender: String
+      homeworld: String
+      films: [String]
+      species: [String]
+      vehicles: [String]
+      starships: [String]
+      created: Date @dateformat
+      edited: Date @dateformat
+      url: String
+    }
+  `);
+};
