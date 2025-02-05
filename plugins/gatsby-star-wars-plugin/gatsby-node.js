@@ -9,22 +9,21 @@ export const sourceNodes = async ({ actions, createNodeId, createContentDigest, 
     let currentPage = 1;
     let allPeople = [];
     try {
-        // Keep fetching until we have at least 12 people
         while (allPeople.length < 12) {
             const url = `https://swapi.py4e.com/api/people/?page=${currentPage}`;
             const result = await fetchPeople(url);
             allPeople.push(...result.results);
-            // Move to the next page if there are more results
+
             if (result.next) {
                 currentPage++;
             }
             else {
-                break; // Stop if there's no next page
+                break;
             }
         }
-        // Limit to 12 results (in case we've fetched more than 12)
+
         const limitedPeople = allPeople.slice(0, 12);
-        // Loop through the limited data and create Gatsby nodes
+
         limitedPeople.forEach((person) => {
             const nodeContent = JSON.stringify(person);
             const nodeMeta = {
